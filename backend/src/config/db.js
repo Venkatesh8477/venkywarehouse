@@ -1,9 +1,18 @@
+const fs = require('node:fs');
 const { Pool } = require('pg');
-const { databaseUrl, nodeEnv } = require('./env');
+const { databaseUrl, nodeEnv, pgSslRootCert } = require('./env');
+
+const usesSupabase = /supabase\.(?:co|com)/i.test(databaseUrl);
+const ssl = nodeEnv === 'production' || usesSupabase
+  ? {
+      rejectUnauthorized: nodeEnv === 'production',
+      ...(pgSslRootCert ? { ca: fs.readFileSync(pgSslRootCert, 'utf8') } : {}),
+    }
+  : false;
 
 const pool = new Pool({
   connectionString: databaseUrl,
-  ssl: nodeEnv === 'production' ? { rejectUnauthorized: false } : false,
+  ssl,
 });
 
 module.exports = {

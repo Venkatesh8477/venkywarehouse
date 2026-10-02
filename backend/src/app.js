@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const healthRoutes = require('./routes/healthRoutes');
+const authRoutes = require('./routes/authRoutes');
+const inventoryRoutes = require('./routes/inventoryRoutes');
 const errorMiddleware = require('./middleware/errorMiddleware');
 const notFoundMiddleware = require('./middleware/notFoundMiddleware');
 const { frontendUrl } = require('./config/env');
@@ -26,6 +28,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/health', healthRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/inventory', inventoryRoutes);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

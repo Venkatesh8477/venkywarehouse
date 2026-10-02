@@ -1,4 +1,5 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const navigation = [
   { to: '/dashboard', label: 'Dashboard' },
@@ -11,14 +12,22 @@ const navigation = [
 ];
 
 export default function AppLayout() {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login', { replace: true });
+  };
+
   return (
     <div className="app-shell">
       <aside className="sidebar">
         <div className="brand-block">
-          <div className="brand-mark">SI</div>
+          <div className="brand-mark">Z</div>
           <div>
-            <strong>Smart Inventory</strong>
-            <small>Warehouse Suite</small>
+            <strong>Venky Warehouse</strong>
+            <small>Quick commerce operations</small>
           </div>
         </div>
 
@@ -38,11 +47,12 @@ export default function AppLayout() {
       <main className="main-panel">
         <header className="topbar">
           <div>
-            <p className="eyebrow">Operations overview</p>
-            <h1>Warehouse Control Center</h1>
+            <p className="eyebrow">Warehouse operations</p>
+            <h1>Venky Fulfillment Center</h1>
           </div>
           <div className="topbar-actions">
             <span className="status-pill">System online</span>
+            <button className="secondary-button" type="button" onClick={handleLogout}>Log out</button>
           </div>
         </header>
 

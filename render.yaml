@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: venky-warehouse-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PGSSLROOTCERT
+        value: /etc/secrets/supabase-ca.crt
+      - key: ALLOW_PUBLIC_SIGNUP
+        value: "false"

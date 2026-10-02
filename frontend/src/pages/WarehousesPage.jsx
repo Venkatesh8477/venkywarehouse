@@ -1,4 +1,8 @@
+import useApiData from '../hooks/useApiData';
+
 export default function WarehousesPage() {
+  const { data: warehouses, loading, error } = useApiData('/inventory/warehouses', []);
+
   return (
     <div className="page-layout">
       <div className="page-header">
@@ -10,16 +14,15 @@ export default function WarehousesPage() {
       </div>
 
       <div className="card-grid two-up">
-        <article className="panel">
-          <h3>Primary warehouse</h3>
-          <p>Location: Pending setup</p>
-          <p>Capacity: Pending setup</p>
-        </article>
-        <article className="panel">
-          <h3>Secondary warehouse</h3>
-          <p>Location: Pending setup</p>
-          <p>Capacity: Pending setup</p>
-        </article>
+        {error && <p role="alert">{error}</p>}
+        {loading && <p>Loading warehouses...</p>}
+        {!loading && !error && warehouses.map((warehouse) => (
+          <article className="panel" key={warehouse.code}>
+            <h3>{warehouse.name}</h3>
+            <p>Location: {warehouse.location}</p>
+            <p>Stocked units: {warehouse.used_units.toLocaleString()} / {warehouse.capacity_units.toLocaleString()}</p>
+          </article>
+        ))}
       </div>
     </div>
   );
