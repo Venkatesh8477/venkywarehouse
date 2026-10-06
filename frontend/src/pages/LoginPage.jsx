@@ -7,7 +7,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const { setUser } = useAuth();
   const [mode, setMode] = useState('login');
-  const [form, setForm] = useState({ username: 'admin1', email: '', password: 'admin1' });
+  const [form, setForm] = useState({ username: '', email: '', password: '' });
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
