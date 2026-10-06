@@ -2,7 +2,7 @@ const express = require('express');
 const { randomUUID } = require('node:crypto');
 const db = require('../config/db');
 const { authMiddleware, requireRoles } = require('../middleware/authMiddleware');
-const { successResponse } = require('../utils/response');
+const { successResponse, errorResponse } = require('../utils/response');
 
 const router = express.Router();
 router.use(authMiddleware);
