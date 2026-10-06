@@ -5,7 +5,7 @@ const { databaseUrl, nodeEnv, pgSslRootCert } = require('./env');
 const usesSupabase = /supabase\.(?:co|com)/i.test(databaseUrl);
 const ssl = nodeEnv === 'production' || usesSupabase
   ? {
-      rejectUnauthorized: nodeEnv === 'production',
+      rejectUnauthorized: Boolean(pgSslRootCert),
       ...(pgSslRootCert ? { ca: fs.readFileSync(pgSslRootCert, 'utf8') } : {}),
     }
   : false;
